@@ -1,9 +1,5 @@
 package com.example.relativelayoutlearning;
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
-import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -13,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,20 +18,34 @@ import java.util.Locale;
 
 public class WeatherDataSerivce  {
 
+    private String cityID;
+
     private static final String API = "8544c10e7dc1de8a48fd3f18dd3c13ed";
 
     AppCompatActivity appCompatActivity;
-    public WeatherDataSerivce(AppCompatActivity appCompatActivity) {
-        this.appCompatActivity = appCompatActivity;
+    OkHttpClient client;
+
+    public interface ResponseListener {
+        void onError(String message);
+
+        void onResponse(String location, String lastModified, String description, String temp,
+                        String temp_min, String temp_max, long sunrise, long sunset, String windd,
+                        String pressure, String humidity);
     }
 
 
-    public void getWebservice(String city) {
+    public WeatherDataSerivce(AppCompatActivity appCompatActivity, OkHttpClient client) {
+        this.appCompatActivity = appCompatActivity;
+        this.client = client;
+    }
+
+
+    public void getWebservice(String city, final ResponseListener responseListener) {
 
         String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&lang=pl&appid=" + API;
         final Request request = new Request.Builder().url(url).build();
 
-        OkHttpClient client = new OkHttpClient();
+
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -42,6 +53,7 @@ public class WeatherDataSerivce  {
                     @Override
                     public void run() {
                         String error = "Brak internetu";
+                        responseListener.onError(error);
 
                     }
                 });
@@ -49,6 +61,7 @@ public class WeatherDataSerivce  {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) {
+                cityID = "";
                 appCompatActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -73,6 +86,8 @@ public class WeatherDataSerivce  {
                             String humidity = (main.getString("humidity")) + " %";
 
                             String location = jObject.getString("name") + ", " + sys.getString("country");
+                            cityID = jObject.getString("name") + ", " + sys.getString("country");
+
 
                             long sunrise = sys.getLong("sunrise");
                             long sunset = sys.getLong("sunset");
@@ -82,36 +97,20 @@ public class WeatherDataSerivce  {
                             //weather
                             String description = weather.getString("description");
 
-                            ((TextView) appCompatActivity.findViewById(R.id.last_updated)).setText(lastModified);
-                            ((TextView) appCompatActivity.findViewById(R.id.location)).setText(location);
-
-                            ((TextView) appCompatActivity.findViewById(R.id.weatherDescription)).setText(description);
-                            ((TextView) appCompatActivity.findViewById(R.id.temperature)).setText(temp);
-
-                            ((TextView) appCompatActivity.findViewById(R.id.minTemp)).setText(temp_min);
-                            ((TextView) appCompatActivity.findViewById(R.id.maxTemp)).setText(temp_max);
-
-
-                            ((TextView) appCompatActivity.findViewById(R.id.sunrise))
-                                    .setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH)
-                                    .format(new Date(sunrise * 1000)));
-
-                            ((TextView) appCompatActivity.findViewById(R.id.sunset))
-                                    .setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH)
-                                    .format(new Date(sunset * 1000)));
-
-                            ((TextView) appCompatActivity.findViewById(R.id.wind)).setText(windd);
-                            ((TextView) appCompatActivity.findViewById(R.id.pressure)).setText(pressure);
-                            ((TextView) appCompatActivity.findViewById(R.id.humidity)).setText(humidity);
+                            responseListener.onResponse(location, lastModified, description, temp,
+                                    temp_min, temp_max, sunrise, sunset, windd,
+                                    pressure, humidity);
 
 
                         } catch (IOException | JSONException e) {
                             String error = "Niepoprawna miejscowość";
                             ((TextView) appCompatActivity.findViewById(R.id.location)).setText(error);
+                            responseListener.onError("Something wrong");
                         }
                     }
                 });
             }
         });
+        client = new OkHttpClient();
     }
 }
