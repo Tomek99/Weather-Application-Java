@@ -1,5 +1,6 @@
 package com.example.relativelayoutlearning;
 
+import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import okhttp3.*;
@@ -54,42 +55,10 @@ public class WeatherDataSerivce {
                     @Override
                     public void run() {
                         try {
-
                             String jsonData = Objects.requireNonNull(response.body()).string();
-                            JSONObject jObject = new JSONObject(jsonData);
-
-                            JSONObject main = jObject.getJSONObject("main");
-                            JSONObject sys = jObject.getJSONObject("sys");
-                            JSONObject wind = jObject.getJSONObject("wind");
-                            JSONObject weather = jObject.getJSONArray("weather").getJSONObject(0);
-
-                            String location = jObject.getString("name") + ", " + sys.getString("country");
-
-                            String lastModified = "Ostatnia akutlizacja: " + (new SimpleDateFormat
-                                    ("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format
-                                    (new Date(jObject.getLong("dt") * 1000)));
-
-                            //main
-                            String temp = (Math.round(main.getDouble("temp"))) + "°C";
-                            String tempMin = "Min temp: " + (main.getString("temp_min")) + "°C";
-                            String tempMax = "Max temp: " + (main.getString("temp_max")) + "°C";
-                            String pressure = main.getString("pressure");
-                            String humidity = (main.getString("humidity")) + " %";
-
-
-                            long sunrise = sys.getLong("sunrise");
-                            long sunset = sys.getLong("sunset");
-
-                            //wind
-                            String windd = (wind.getString("speed")) + " km/h";
-                            //weather
-                            String description = weather.getString("description");
-
-                            DataWarehouse dataWarehouse = new DataWarehouse(location, lastModified, description, temp,
-                                    tempMin, tempMax, sunrise, sunset, windd, pressure, humidity);
+                            DataWarehouse dataWarehouse = new DataWarehouse(jsonData);
 
                             responseListener.onResponse(dataWarehouse);
-
 
                         } catch (IOException | JSONException e) {
                             String error = "Niepoprawna miejscowość";

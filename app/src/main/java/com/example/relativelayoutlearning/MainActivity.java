@@ -9,11 +9,6 @@ import android.os.Bundle;
 
 import okhttp3.*;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-
 public class MainActivity extends AppCompatActivity {
 
     private EditText getCity;
@@ -43,24 +38,21 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(DataWarehouse data) {
-
                         ((TextView) findViewById(R.id.location)).setText(data.location);
                         ((TextView) findViewById(R.id.last_updated)).setText(data.lastModified);
                         ((TextView) findViewById(R.id.weatherDescription)).setText(data.description);
                         ((TextView) findViewById(R.id.temperature)).setText(data.temp);
                         ((TextView) findViewById(R.id.minTemp)).setText(data.tempMin);
                         ((TextView) findViewById(R.id.maxTemp)).setText(data.tempMax);
-                        ((TextView) findViewById(R.id.sunrise))
-                                .setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH)
-                                        .format(new Date(data.sunrise * 1000)));
-                        ((TextView) findViewById(R.id.sunset))
-                                .setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH)
-                                        .format(new Date(data.sunset * 1000)));
-                        ((TextView) findViewById(R.id.wind)).setText(data.wind);
+                        ((TextView) findViewById(R.id.sunrise)).setText(data.sunrise);
+                        ((TextView) findViewById(R.id.sunset)).setText(data.sunset);
+                        ((TextView) findViewById(R.id.wind)).setText(data.speed);
                         ((TextView) findViewById(R.id.pressure)).setText(data.pressure);
                         ((TextView) findViewById(R.id.humidity)).setText(data.humidity);
                     }
                 });
+
+                getCity.setText("");
             }
         });
     }
