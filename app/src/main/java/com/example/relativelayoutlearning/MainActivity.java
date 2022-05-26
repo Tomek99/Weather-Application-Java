@@ -31,14 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     OkHttpClient client = new OkHttpClient();
 
-    DataWarehouse dataWarehouse = new DataWarehouse();
-
-    Gson gson = new Gson();
-
-    String json = gson.toJson(dataWarehouse);
-
     final WeatherDataSerivce weatherDataSerivce = new WeatherDataSerivce(MainActivity.this,
-            client, dataWarehouse);
+            client);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,75 +46,34 @@ public class MainActivity extends AppCompatActivity {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                weatherDataSerivce.getWebservice(getCity.getText().toString());
+                weatherDataSerivce.getWebservice(getCity.getText().toString(), new ResponseListener() {
+                    @Override
+                    public void onError(String message) {
+                        ((TextView) findViewById(R.id.location)).setText(message);
+                    }
 
-                ((TextView) findViewById(R.id.location)).setText(dataWarehouse.location);
+                    @Override
+                    public void onResponse(String json, Gson gson) {
+                        DataWarehouse data = gson.fromJson(json, DataWarehouse.class);
+
+                        ((TextView) findViewById(R.id.location)).setText(data.location);
+                        ((TextView) findViewById(R.id.last_updated)).setText(data.lastModified);
+                        ((TextView) findViewById(R.id.weatherDescription)).setText(data.description);
+                        ((TextView) findViewById(R.id.temperature)).setText(data.temp);
+                        ((TextView) findViewById(R.id.minTemp)).setText(data.tempMin);
+                        ((TextView) findViewById(R.id.maxTemp)).setText(data.tempMax);
+                        ((TextView) findViewById(R.id.sunrise))
+                                .setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH)
+                                        .format(new Date(data.sunrise * 1000)));
+                        ((TextView) findViewById(R.id.sunset))
+                                .setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH)
+                                        .format(new Date(data.sunset * 1000)));
+                        ((TextView) findViewById(R.id.wind)).setText(data.wind);
+                        ((TextView) findViewById(R.id.pressure)).setText(data.pressure);
+                        ((TextView) findViewById(R.id.humidity)).setText(data.humidity);
+                    }
+                });
             }
         });
     }
 }
-//, new ResponseListener() {
-//@Override
-//public void setLocation(String location) {
-//        ((TextView) findViewById(R.id.location)).setText(location);
-//        }
-//
-//@Override
-//public void setLastModified(String lastModified) {
-//        ((TextView) findViewById(R.id.last_updated)).setText(lastModified);
-//        }
-//
-//@Override
-//public void setDescription(String description) {
-//        ((TextView) findViewById(R.id.weatherDescription)).setText(description);
-//        }
-//
-//@Override
-//public void setTemp(String temp) {
-//        ((TextView) findViewById(R.id.temperature)).setText(temp);
-//        }
-//
-//@Override
-//public void setTempMin(String tempMin) {
-//        ((TextView) findViewById(R.id.minTemp)).setText(tempMin);
-//        }
-//
-//@Override
-//public void setTempMax(String tempMax) {
-//        ((TextView) findViewById(R.id.maxTemp)).setText(tempMax);
-//        }
-//
-//@Override
-//public void setSunrise(long sunrise) {
-//        ((TextView) findViewById(R.id.sunrise))
-//        .setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH)
-//        .format(new Date(sunrise * 1000)));
-//        }
-//
-//@Override
-//public void setSunset(long sunset) {
-//        ((TextView) findViewById(R.id.sunset))
-//        .setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH)
-//        .format(new Date(sunset * 1000)));
-//        }
-//
-//@Override
-//public void setWind(String wind) {
-//        ((TextView) findViewById(R.id.wind)).setText(wind);
-//        }
-//
-//@Override
-//public void setPressure(String pressure) {
-//        ((TextView) findViewById(R.id.pressure)).setText(pressure);
-//        }
-//
-//@Override
-//public void setHumidity(String humidity) {
-//        ((TextView) findViewById(R.id.humidity)).setText(humidity);
-//        }
-//
-//@Override
-//public void setError(String message) {
-//        ((TextView) findViewById(R.id.location)).setText(message);
-//        }
-//        }

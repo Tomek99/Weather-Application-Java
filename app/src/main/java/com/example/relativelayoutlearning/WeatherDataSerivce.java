@@ -1,6 +1,7 @@
 package com.example.relativelayoutlearning;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.gson.Gson;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -13,22 +14,20 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-public class WeatherDataSerivce  {
+public class WeatherDataSerivce {
 
     private static final String API = "8544c10e7dc1de8a48fd3f18dd3c13ed";
 
 
     AppCompatActivity appCompatActivity;
     OkHttpClient client;
-    DataWarehouse dataWarehouse;
 
-    public WeatherDataSerivce(AppCompatActivity appCompatActivity, OkHttpClient client, DataWarehouse dataWarehouse) {
+    public WeatherDataSerivce(AppCompatActivity appCompatActivity, OkHttpClient client) {
         this.appCompatActivity = appCompatActivity;
         this.client = client;
-        this.dataWarehouse = dataWarehouse;
     }
 
-    public void getWebservice(String city) {
+    public void getWebservice(String city, final ResponseListener responseListener) {
 
 
         String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&lang=pl&appid=" + API;
@@ -42,7 +41,7 @@ public class WeatherDataSerivce  {
                     @Override
                     public void run() {
                         String error = "Brak internetu";
-                        dataWarehouse.responseListener.setError(error);
+                        responseListener.onError(error);
 
                     }
                 });
@@ -55,6 +54,7 @@ public class WeatherDataSerivce  {
                     @Override
                     public void run() {
                         try {
+
                             String jsonData = Objects.requireNonNull(response.body()).string();
                             JSONObject jObject = new JSONObject(jsonData);
 
@@ -63,18 +63,19 @@ public class WeatherDataSerivce  {
                             JSONObject wind = jObject.getJSONObject("wind");
                             JSONObject weather = jObject.getJSONArray("weather").getJSONObject(0);
 
+                            String location = jObject.getString("name") + ", " + sys.getString("country");
+
                             String lastModified = "Ostatnia akutlizacja: " + (new SimpleDateFormat
                                     ("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format
                                     (new Date(jObject.getLong("dt") * 1000)));
 
                             //main
                             String temp = (Math.round(main.getDouble("temp"))) + "°C";
-                            String temp_min = "Min temp: " + (main.getString("temp_min")) + "°C";
-                            String temp_max = "Max temp: " + (main.getString("temp_max")) + "°C";
+                            String tempMin = "Min temp: " + (main.getString("temp_min")) + "°C";
+                            String tempMax = "Max temp: " + (main.getString("temp_max")) + "°C";
                             String pressure = main.getString("pressure");
                             String humidity = (main.getString("humidity")) + " %";
 
-                            String location = jObject.getString("name") + ", " + sys.getString("country");
 
                             long sunrise = sys.getLong("sunrise");
                             long sunset = sys.getLong("sunset");
@@ -84,25 +85,19 @@ public class WeatherDataSerivce  {
                             //weather
                             String description = weather.getString("description");
 
-//                            responseListener.onResponse(location, lastModified, description, temp,
-//                                    temp_min, temp_max, sunrise, sunset, windd,
-//                                    pressure, humidity);
-                            dataWarehouse.responseListener.setLocation(location);
-                            dataWarehouse.responseListener.setLastModified(lastModified);
-                            dataWarehouse.responseListener.setDescription(description);
-                            dataWarehouse.responseListener.setTemp(temp);
-                            dataWarehouse.responseListener.setTempMin(temp_min);
-                            dataWarehouse.responseListener.setTempMax(temp_max);
-                            dataWarehouse.responseListener.setSunrise(sunrise);
-                            dataWarehouse.responseListener.setSunset(sunset);
-                            dataWarehouse.responseListener.setWind(windd);
-                            dataWarehouse.responseListener.setPressure(pressure);
-                            dataWarehouse.responseListener.setHumidity(humidity);
+                            Gson gson = new Gson();
+
+                            DataWarehouse dataWarehouse = new DataWarehouse(location, lastModified, description, temp,
+                                    tempMin, tempMax, sunrise, sunset, windd, pressure, humidity);
+
+                            String json = gson.toJson(dataWarehouse);
+
+                            responseListener.onResponse(json, gson);
 
 
                         } catch (IOException | JSONException e) {
                             String error = "Niepoprawna miejscowość";
-                            dataWarehouse.responseListener.setError(error);
+                            responseListener.onError(error);
                         }
                     }
                 });
