@@ -1,8 +1,5 @@
 package com.example.relativelayoutlearning;
 
-import android.widget.TextView;
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
@@ -12,35 +9,27 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 public class WeatherDataSerivce  {
 
-    private String cityID;
-
     private static final String API = "8544c10e7dc1de8a48fd3f18dd3c13ed";
+
 
     AppCompatActivity appCompatActivity;
     OkHttpClient client;
+    DataWarehouse dataWarehouse;
 
-    public interface ResponseListener {
-        void onError(String message);
-
-        void onResponse(String location, String lastModified, String description, String temp,
-                        String temp_min, String temp_max, long sunrise, long sunset, String windd,
-                        String pressure, String humidity);
-    }
-
-
-    public WeatherDataSerivce(AppCompatActivity appCompatActivity, OkHttpClient client) {
+    public WeatherDataSerivce(AppCompatActivity appCompatActivity, OkHttpClient client, DataWarehouse dataWarehouse) {
         this.appCompatActivity = appCompatActivity;
         this.client = client;
+        this.dataWarehouse = dataWarehouse;
     }
 
-
     public void getWebservice(String city, final ResponseListener responseListener) {
+
 
         String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&lang=pl&appid=" + API;
         final Request request = new Request.Builder().url(url).build();
@@ -53,7 +42,7 @@ public class WeatherDataSerivce  {
                     @Override
                     public void run() {
                         String error = "Brak internetu";
-                        responseListener.onError(error);
+                        responseListener.setError(error);
 
                     }
                 });
@@ -61,12 +50,12 @@ public class WeatherDataSerivce  {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) {
-                cityID = "";
+
                 appCompatActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            String jsonData = response.body().string();
+                            String jsonData = Objects.requireNonNull(response.body()).string();
                             JSONObject jObject = new JSONObject(jsonData);
 
                             JSONObject main = jObject.getJSONObject("main");
@@ -86,8 +75,6 @@ public class WeatherDataSerivce  {
                             String humidity = (main.getString("humidity")) + " %";
 
                             String location = jObject.getString("name") + ", " + sys.getString("country");
-                            cityID = jObject.getString("name") + ", " + sys.getString("country");
-
 
                             long sunrise = sys.getLong("sunrise");
                             long sunset = sys.getLong("sunset");
@@ -97,15 +84,25 @@ public class WeatherDataSerivce  {
                             //weather
                             String description = weather.getString("description");
 
-                            responseListener.onResponse(location, lastModified, description, temp,
-                                    temp_min, temp_max, sunrise, sunset, windd,
-                                    pressure, humidity);
+//                            responseListener.onResponse(location, lastModified, description, temp,
+//                                    temp_min, temp_max, sunrise, sunset, windd,
+//                                    pressure, humidity);
+                            dataWarehouse.responseListener.setLocation(location);
+                            responseListener.setLastModified(lastModified);
+                            responseListener.setDescription(description);
+                            responseListener.setTemp(temp);
+                            responseListener.setTempMin(temp_min);
+                            responseListener.setTempMax(temp_max);
+                            responseListener.setSunrise(sunrise);
+                            responseListener.setSunset(sunset);
+                            responseListener.setWind(windd);
+                            responseListener.setPressure(pressure);
+                            responseListener.setHumidity(humidity);
 
 
                         } catch (IOException | JSONException e) {
                             String error = "Niepoprawna miejscowość";
-                            ((TextView) appCompatActivity.findViewById(R.id.location)).setText(error);
-                            responseListener.onError("Something wrong");
+                            responseListener.setError(error);
                         }
                     }
                 });
