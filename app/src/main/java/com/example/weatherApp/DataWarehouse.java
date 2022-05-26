@@ -1,4 +1,4 @@
-package com.example.relativelayoutlearning;
+package com.example.weatherApp;
 
 import com.google.gson.Gson;
 import org.json.JSONException;

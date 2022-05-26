@@ -1,4 +1,4 @@
-package com.example.relativelayoutlearning;
+package com.example.weatherApp;
 
 import android.view.View;
 import android.widget.Button;
