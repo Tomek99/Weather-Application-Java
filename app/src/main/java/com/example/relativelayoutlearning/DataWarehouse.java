@@ -1,10 +1,11 @@
 package com.example.relativelayoutlearning;
 
+import android.util.Log;
 import com.google.gson.Gson;
 
 public class DataWarehouse {
 
-    String location;
+    String location = "hello kitty";
     String lastModified;
     String description;
     String temp;
@@ -19,7 +20,7 @@ public class DataWarehouse {
     ResponseListener responseListener = new ResponseListener() {
         @Override
         public void setLocation(String location) {
-
+            Log.i("WORKING", location);
         }
 
         @Override

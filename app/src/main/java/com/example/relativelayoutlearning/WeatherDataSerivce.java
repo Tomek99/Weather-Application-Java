@@ -28,7 +28,7 @@ public class WeatherDataSerivce  {
         this.dataWarehouse = dataWarehouse;
     }
 
-    public void getWebservice(String city, final ResponseListener responseListener) {
+    public void getWebservice(String city) {
 
 
         String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&lang=pl&appid=" + API;
@@ -42,7 +42,7 @@ public class WeatherDataSerivce  {
                     @Override
                     public void run() {
                         String error = "Brak internetu";
-                        responseListener.setError(error);
+                        dataWarehouse.responseListener.setError(error);
 
                     }
                 });
@@ -88,21 +88,21 @@ public class WeatherDataSerivce  {
 //                                    temp_min, temp_max, sunrise, sunset, windd,
 //                                    pressure, humidity);
                             dataWarehouse.responseListener.setLocation(location);
-                            responseListener.setLastModified(lastModified);
-                            responseListener.setDescription(description);
-                            responseListener.setTemp(temp);
-                            responseListener.setTempMin(temp_min);
-                            responseListener.setTempMax(temp_max);
-                            responseListener.setSunrise(sunrise);
-                            responseListener.setSunset(sunset);
-                            responseListener.setWind(windd);
-                            responseListener.setPressure(pressure);
-                            responseListener.setHumidity(humidity);
+                            dataWarehouse.responseListener.setLastModified(lastModified);
+                            dataWarehouse.responseListener.setDescription(description);
+                            dataWarehouse.responseListener.setTemp(temp);
+                            dataWarehouse.responseListener.setTempMin(temp_min);
+                            dataWarehouse.responseListener.setTempMax(temp_max);
+                            dataWarehouse.responseListener.setSunrise(sunrise);
+                            dataWarehouse.responseListener.setSunset(sunset);
+                            dataWarehouse.responseListener.setWind(windd);
+                            dataWarehouse.responseListener.setPressure(pressure);
+                            dataWarehouse.responseListener.setHumidity(humidity);
 
 
                         } catch (IOException | JSONException e) {
                             String error = "Niepoprawna miejscowość";
-                            responseListener.setError(error);
+                            dataWarehouse.responseListener.setError(error);
                         }
                     }
                 });
