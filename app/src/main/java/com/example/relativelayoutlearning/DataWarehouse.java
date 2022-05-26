@@ -1,21 +1,18 @@
 package com.example.relativelayoutlearning;
 
-import android.util.Log;
-import com.google.gson.Gson;
-
 public class DataWarehouse {
 
-    String location;
-    String lastModified;
-    String description;
-    String temp;
-    String tempMin;
-    String tempMax;
-    long sunrise;
-    long sunset;
-    String wind;
-    String pressure;
-    String humidity;
+    protected String location;
+    protected String lastModified;
+    protected String description;
+    protected String temp;
+    protected String tempMin;
+    protected String tempMax;
+    protected long sunrise;
+    protected long sunset;
+    protected String wind;
+    protected String pressure;
+    protected String humidity;
 
     public DataWarehouse(String location, String lastModified, String description, String temp, String tempMin,
                          String tempMax, long sunrise, long sunset, String wind, String pressure, String humidity) {

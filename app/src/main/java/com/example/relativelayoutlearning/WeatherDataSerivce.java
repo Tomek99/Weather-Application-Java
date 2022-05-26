@@ -85,14 +85,10 @@ public class WeatherDataSerivce {
                             //weather
                             String description = weather.getString("description");
 
-                            Gson gson = new Gson();
-
                             DataWarehouse dataWarehouse = new DataWarehouse(location, lastModified, description, temp,
                                     tempMin, tempMax, sunrise, sunset, windd, pressure, humidity);
 
-                            String json = gson.toJson(dataWarehouse);
-
-                            responseListener.onResponse(json, gson);
+                            responseListener.onResponse(dataWarehouse);
 
 
                         } catch (IOException | JSONException e) {

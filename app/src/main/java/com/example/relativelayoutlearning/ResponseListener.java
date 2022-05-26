@@ -6,5 +6,5 @@ public interface ResponseListener {
 
     void onError(String message);
 
-    void onResponse(String json, Gson gson);
+    void onResponse(DataWarehouse data);
 }
