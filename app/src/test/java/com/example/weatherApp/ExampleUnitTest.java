@@ -1,4 +1,4 @@
-package com.example.relativelayoutlearning;
+package com.example.weatherApp;
 
 import org.junit.Test;
 

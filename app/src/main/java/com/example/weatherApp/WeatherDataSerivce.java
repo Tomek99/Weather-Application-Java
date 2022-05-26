@@ -57,7 +57,6 @@ public class WeatherDataSerivce {
                         try {
                             String jsonData = Objects.requireNonNull(response.body()).string();
                             DataWarehouse dataWarehouse = new DataWarehouse(jsonData);
-
                             responseListener.onResponse(dataWarehouse);
 
                         } catch (IOException | JSONException e) {
