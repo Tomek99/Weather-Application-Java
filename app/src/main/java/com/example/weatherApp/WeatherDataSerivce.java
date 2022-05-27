@@ -54,7 +54,7 @@ public class WeatherDataSerivce {
                             responseListener.onResponse(dataWarehouse);
 
                         } catch (IOException | JSONException e) {
-                            String error = "Niepoprawna miejscowość";
+                            String error = "Niepoprawna nazwa";
                             responseListener.onError(error);
                         }
                     }

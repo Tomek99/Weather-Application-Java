@@ -1,13 +1,27 @@
 package com.example.weatherApp;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentSender;
+import android.util.Log;
 import android.widget.*;
 import android.view.View;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import okhttp3.*;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    Button btn1;
+    ImageButton btn2;
+    EditText getCity;
 
     CurrentLocation currentLocation;
 
@@ -22,8 +36,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText getCity = (EditText) findViewById(R.id.enterLocation);
-        Button btn1 = (Button) findViewById(R.id.searchLocation);
+        new GPS(MainActivity.this);
+
+        getCity = (EditText) findViewById(R.id.enterLocation);
+        btn1 = (Button) findViewById(R.id.searchLocation);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton btn2 = (ImageButton) findViewById(R.id.btn2);
+        btn2 = (ImageButton) findViewById(R.id.btn2);
+
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

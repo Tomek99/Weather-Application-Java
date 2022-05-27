@@ -3,7 +3,6 @@ package com.example.weatherApp;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.*;
-import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
