@@ -1,18 +1,12 @@
 package com.example.weatherApp;
 
-import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.gson.Gson;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 public class WeatherDataSerivce {

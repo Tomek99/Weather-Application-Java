@@ -1,15 +1,11 @@
 package com.example.weatherApp;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.*;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -43,7 +39,7 @@ public class CurrentLocation {
                         }
                         @Override
                         public void onResponse(DataWarehouse data) {
-                            setValues(data);
+                           new UpdateElements(mainActivity,data);
                         }
                     });
                 }
@@ -86,19 +82,5 @@ public class CurrentLocation {
                 }
             }
         });
-    }
-
-    private void setValues(DataWarehouse value) {
-        ((TextView) mainActivity.findViewById(R.id.location)).setText(value.location);
-        ((TextView) mainActivity.findViewById(R.id.last_updated)).setText(value.lastModified);
-        ((TextView) mainActivity.findViewById(R.id.weatherDescription)).setText(value.description);
-        ((TextView) mainActivity.findViewById(R.id.temperature)).setText(value.temp);
-        ((TextView) mainActivity.findViewById(R.id.minTemp)).setText(value.tempMin);
-        ((TextView) mainActivity.findViewById(R.id.maxTemp)).setText(value.tempMax);
-        ((TextView) mainActivity.findViewById(R.id.sunrise)).setText(value.sunrise);
-        ((TextView) mainActivity.findViewById(R.id.sunset)).setText(value.sunset);
-        ((TextView) mainActivity.findViewById(R.id.wind)).setText(value.speed);
-        ((TextView) mainActivity.findViewById(R.id.pressure)).setText(value.pressure);
-        ((TextView) mainActivity.findViewById(R.id.humidity)).setText(value.humidity);
     }
 }
