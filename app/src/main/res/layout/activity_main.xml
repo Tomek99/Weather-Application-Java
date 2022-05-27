@@ -67,18 +67,40 @@
             android:textAlignment="center"
             android:textColorHint="#FFF" />
 
-        <Button
-            android:layout_width="140dp"
-            android:layout_height="60dp"
-            android:layout_below="@+id/enterLocation"
-            android:id="@+id/searchLocation"
-            android:onClick="getCity"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="38dp"
-            android:text="@string/szukaj"
-            android:background="@drawable/my_button"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:textColor="#FFF" />
+            android:layout_marginTop="0dp">
+
+            <Button
+                android:id="@+id/searchLocation"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/my_button"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:text="@string/szukaj"
+                android:textColor="#FFF" />
+
+            <ImageButton
+                android:id="@+id/btn2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                android:layout_marginStart="5dp"
+                android:tint="#fff"
+                android:layout_toEndOf="@+id/searchLocation"
+                android:background="@drawable/my_button"
+                android:src="@drawable/update_location"/>
+
+        </RelativeLayout>
+
+
 
     </RelativeLayout>
 
@@ -327,7 +349,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/pressureImg"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/plessure"
+                    android:text="@string/pressure"
                     android:textColor="#FFF"
                     android:textSize="12sp" />
 
