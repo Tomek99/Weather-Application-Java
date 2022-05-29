@@ -39,17 +39,18 @@ public class WeatherDataSerivce {
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) {
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+                String jsonData = Objects.requireNonNull(response.body()).string();
 
                 appCompatActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            String jsonData = Objects.requireNonNull(response.body()).string();
                             DataWarehouse dataWarehouse = new DataWarehouse(jsonData);
                             responseListener.onResponse(dataWarehouse);
 
-                        } catch (IOException | JSONException e) {
+                        } catch (JSONException e) {
                             String error = "Niepoprawna nazwa";
                             responseListener.onError(error);
                         }
