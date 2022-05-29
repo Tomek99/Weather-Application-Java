@@ -11,6 +11,8 @@ import com.google.android.gms.location.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+
+// https://stackoverflow.com/questions/43518520/how-to-ask-user-to-enable-gps-at-the-launch-of-application
 public class GPS {
     MainActivity mainActivity;
     public GPS(MainActivity mainActivity) {

@@ -38,7 +38,7 @@ public class CurrentLocation {
                         }
                         @Override
                         public void onResponse(DataWarehouse data) {
-                           new UpdateElements(mainActivity,data);
+                           mainActivity.updateElements(data);
                         }
                     });
                 }

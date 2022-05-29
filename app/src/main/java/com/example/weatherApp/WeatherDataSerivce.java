@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
-
-
 import java.io.IOException;
 import java.util.Objects;
 
@@ -24,10 +22,8 @@ public class WeatherDataSerivce {
 
     public void getWebservice(String city, final ResponseListener responseListener) {
 
-
         String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&lang=pl&appid=" + API;
         final Request request = new Request.Builder().url(url).build();
-
 
         client.newCall(request).enqueue(new Callback() {
             @Override

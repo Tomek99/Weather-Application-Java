@@ -1,19 +1,9 @@
 package com.example.weatherApp;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.IntentSender;
-import android.util.Log;
 import android.widget.*;
 import android.view.View;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.ResolvableApiException;
-import com.google.android.gms.location.*;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import okhttp3.*;
 
 
@@ -52,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(DataWarehouse data) {
-                        new UpdateElements(MainActivity.this, data);
+                        updateElements(data);
+
                     }
                 });
                 getCity.setText("");
@@ -64,8 +55,23 @@ public class MainActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new GPS(MainActivity.this);
                 currentLocation = new CurrentLocation(MainActivity.this, weatherDataSerivce);
             }
         });
+    }
+
+    protected void updateElements(DataWarehouse value) {
+        ((TextView) findViewById(R.id.location)).setText(value.location);
+        ((TextView) findViewById(R.id.last_updated)).setText(value.lastModified);
+        ((TextView) findViewById(R.id.weatherDescription)).setText(value.description);
+        ((TextView) findViewById(R.id.temperature)).setText(value.temp);
+        ((TextView) findViewById(R.id.minTemp)).setText(value.tempMin);
+        ((TextView) findViewById(R.id.maxTemp)).setText(value.tempMax);
+        ((TextView) findViewById(R.id.sunrise)).setText(value.sunrise);
+        ((TextView) findViewById(R.id.sunset)).setText(value.sunset);
+        ((TextView) findViewById(R.id.wind)).setText(value.speed);
+        ((TextView) findViewById(R.id.pressure)).setText(value.pressure);
+        ((TextView) findViewById(R.id.humidity)).setText(value.humidity);
     }
 }
