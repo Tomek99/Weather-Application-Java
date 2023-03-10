@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                weatherDataSerivce.getWebservice(getCity.getText().toString().trim(), new ResponseListener() {
+                weatherDataSerivce.getWebservice(getCity.getText().toString().trim(),  new ResponseListener(){
                     @Override
                     public void onError(String message) {
                         ((TextView) findViewById(R.id.location)).setText(message);
