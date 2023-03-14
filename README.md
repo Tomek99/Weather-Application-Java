@@ -6,7 +6,7 @@ The weather app is a very useful tool that allows you to get up-to-date informat
 
 After entering the name of the locality and pressing the "search" button, we can get the following information. If the locality does not exist, we will get an "invalid name" error. When we enter the correct data then we will get the current data for the locality. If we do not have access to the Internet we will get the following message "no internet".
 
-The data that is displayed for a given locality includes the minimum and maximum temperature, atmospheric conditions (e.g. foggy, sunny, rainy), humidity, pressure, wind speed and sunrise and sunset times. All of this data is updated in real time using an API that provides weather information from various sources.
+The data that is displayed for a given locality includes the name of the locality, the country abbreviation of the locality, the last update, the minimum and maximum temperature, atmospheric conditions (e.g. foggy, sunny, rainy), humidity, pressure, wind speed and sunrise and sunset times. All of this data is updated in real time using an API that provides weather information from various sources.
 
 The weather app also has a feature that provides weather information using GPS. This allows the user to get information about the current weather at his current location without having to enter the name of the locality.
 
@@ -22,9 +22,7 @@ informacje na temat pogody.
 
 Po wprowadzeniu nazwy miejscowości i naciśnięciu przycisku "szukaj" możemy otrzymać następujące informacje. Jeśli miejscowość nie istnieje, otrzymamy błąd "niepoprawna nazwa". Gdy podamy poprawne dane wówczas otrzymamy bieżące dane dla danej miejscowości. Jeżeli nie mamy dostępu do internetu otrzymamy komunikat o następującej zawartości "brak internetu".
 
-Dane, które są wyświetlane dla danej miejscowości, obejmują minimalną oraz maksymalną temperaturę, warunki
-atmosferyczne (np. zamglenie, słonecznie, deszcz), wilgotność, ciśnienie, prędkość wiatru oraz godziny wschodu i zachodu słońca. Wszystkie te
-dane są aktualizowane na bieżąco z wykorzystaniem API, które dostarcza informacji na temat pogody z różnych źródeł.
+Dane, które są wyświetlane dla danej miejscowości, obejmują nazwę miejscowości, skrót nazwy państwa danej miejscowości, ostatnią aktualizacje,  minimalną oraz maksymalną temperaturę, warunki atmosferyczne (np. zamglenie, słonecznie, deszcz), wilgotność, ciśnienie, prędkość wiatru oraz godziny wschodu i zachodu słońca. Wszystkie te dane są aktualizowane na bieżąco z wykorzystaniem API, które dostarcza informacji na temat pogody z różnych źródeł.
 
 
 Aplikacja pogodowa posiada również funkcję, która pozwala na uzyskanie informacji o pogodzie przy wykorzystaniu GPS. Dzięki temu
