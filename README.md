@@ -35,7 +35,7 @@ Aplikacja pogodowa jest bardzo przydatna dla osób, które chcą planować swoje
 mają duży wpływ na ich plany. Dzięki tej aplikacji można uzyskać dokładne i aktualne informacje na temat pogody w różnych miejscach na
 świecie, co pozwala na podejmowanie decyzji i unikanie niepotrzebnych ryzyk.
 
-Examples of working application
+Application images
 -------------
  
  First look when we open the apps.
