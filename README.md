@@ -6,13 +6,13 @@ The weather app is a very useful tool that allows you to get up-to-date informat
 
 After entering the name of the locality and pressing the "search" button, we can get the following information. If the locality does not exist, we will get an "invalid name" error. When we enter the correct data then we will get the current data for the locality. If we do not have access to the Internet we will get the following message "no internet".
 
-The data that is displayed for a given locality includes the name of the locality, the country abbreviation of the locality, the last update, the minimum and maximum temperature, atmospheric conditions (e.g. foggy, sunny, rainy), humidity, pressure, wind speed and sunrise and sunset times. All of this data is updated in real time using an API that provides weather information from various sources.
+The data that is displayed for a given locality includes the name of the locality, the country abbreviation of the locality, the last update, the minimum and maximum temperature, atmospheric conditions (e.g. foggy, sunny, rainy), humidity, pressure, wind speed and sunrise and sunset times. All of this data is updated in real-time using an API that provides weather information from various sources.
 
 The weather app also has a feature that provides weather information using GPS. This allows the user to get information about the current weather at his current location without having to enter the name of the locality.
 
-To use this feature, the user must allow access to his location. Once permission is granted, the application uses GPS to determine the user's current location and retrieves information about the current weather in that region. This feature is very useful for people who want to get weather information at their current location.
+To use this feature, the user must allow access to his location. Once permission is granted, the application uses GPS to determine the user's current location and retrieves information about the current weather in that region. This feature is handy for people who want to get weather information at their current location.
 
-The weather app is very useful for people who want to plan their outdoor activities, especially when weather conditions have a big impact on their plans. With the help of this app, you can get accurate and up-to-date information about the weather in various places around the world, allowing you to make decisions and avoid unnecessary risks.
+The weather app is very useful for people who want to plan their outdoor activities, especially when weather conditions greatly impact their plans. With the help of this app, you can get accurate and up-to-date information about the weather in various places around the world, allowing you to make decisions and avoid unnecessary risks.
 
 PL
 ------
@@ -38,7 +38,7 @@ mają duży wpływ na ich plany. Dzięki tej aplikacji można uzyskać dokładne
 Application images
 -------------
  
- First look when we open the apps.
+ First, look at when we open the apps.
  
  Pierwsze spojrzenie, kiedy otworzymy aplikacje.
  
@@ -51,7 +51,7 @@ Po wprowadzeniu poprawnych danych otrzymamy następujący wynik.
 
 ![zdj5](https://user-images.githubusercontent.com/28042923/224419999-c55b72da-dcdd-4403-bf29-ae341fd04369.jpg)
 
-Bad input data and no internet connection
+Insufficient input data and no internet connection
 
 Złe dane wejściowe oraz brak połaczenia z internetem.
 ![error](https://user-images.githubusercontent.com/28042923/224420107-0877cc54-08f2-4d61-a83f-96820e29d56d.png)
@@ -64,7 +64,7 @@ Prośba o włączenie GPS oraz dokładnej lokalizacje.
 
 Download | Pobierz
 -------------
-Application works only with on android phones.
+The application works only on Android phones.
 
 Aplikacja działa wyłącznie na telefonach z systemem android.
 
